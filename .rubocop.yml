@@ -130,6 +130,9 @@ Style/GuardClause:
 Style/MethodMissingSuper:
   Enabled: false # why the need to fallback to super?
 
+Style/MissingRespondToMissing:
+  Enabled: false
+
 Style/Next:
   Enabled: false # not really useful
 
