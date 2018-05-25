@@ -138,19 +138,23 @@ module HexaPDF
           result.type = :jbig2
         when :CCITTFaxDecode
           result.type = :ccitt
+          result.extension = 'tiff'
+        when :FlateDecode
+          result.type = :tiff
+          result.extension = 'tiff'
         else
           result.type = :png
           result.extension = 'png'
         end
 
-        if rest || ![:FlateDecode, :DCTDecode, :JPXDecode, nil].include?(filter)
+        if rest || ![:FlateDecode, :DCTDecode, :JPXDecode, :CCITTFaxDecode, nil].include?(filter)
           result.writable = false
         end
 
         color_space, = *self[:ColorSpace]
         if color_space == :Indexed
           result.indexed = true
-          color_space, = *document.deref(self[:ColorSpace][1])
+          color_space, = *document.deref(self[:ColorSpace][1]).value
         end
         case color_space
         when :DeviceRGB, :CalRGB
@@ -163,6 +167,18 @@ module HexaPDF
           result.color_space = :cmyk
           result.components = 4
           result.writable = false if result.type == :png
+        when :ICCBased
+          icc_profile_stream = document.deref(self[:ColorSpace][1]).value.last
+          icc_profile = document.deref(icc_profile_stream)
+          result.components = icc_profile[:N]
+          result.color_space = case result.components
+                                 when 1
+                                   :gray
+                                 when 3
+                                   :rgb
+                                 when 4
+                                   :cmyk
+                               end
         else
           result.color_space = :other
           result.components = -1
@@ -205,6 +221,10 @@ module HexaPDF
           while source.alive? && (chunk = source.resume)
             io << chunk
           end
+        elsif info.type == :ccitt
+          write_ccitt(io, info)
+        elsif info.type == :tiff
+          write_tiff(io, info)
         else
           write_png(io, info)
         end
@@ -273,6 +293,127 @@ module HexaPDF
       # Returns the binary representation of the PNG chunk for the given chunk type and data.
       def png_chunk(type, data = '')
         [data.length].pack("N") << type << data << [Zlib.crc32(data, Zlib.crc32(type))].pack("N")
+      end
+
+      # Writes the CCITT Fax encoded image as TIFF to the given IO stream.
+      def write_ccitt(io, info)
+        source = stream_source
+
+        # sometimes self[:DecodeParms] is an array with single dictionary
+        decode_params = [self[:DecodeParms]].flatten[0]
+
+        compression = if decode_params[:K] > 0 # G3-2D
+                        3
+                      elsif decode_params[:K] < 0 # G4-2D
+                        4
+                      else # G3-1D
+                        2
+                      end
+
+        photometric_interpretation = case decode_params[:BlackIs1]
+                                       when TrueClass
+                                         0
+                                       when FalseClass
+                                         1
+                                       else
+                                         if self[:Decode] == [1, 0]
+                                           1
+                                         elsif self[:Decode] == [0, 1]
+                                           0
+                                         else
+                                           1
+                                         end
+                                     end
+
+
+        # IFD entries
+        ifd_entries = [
+          [0x0100, 4, 1, info.width],  # width
+          [0x0101, 4, 1, info.height], # height
+          [0x0102, 3, 1, info.bits_per_component], # bits per sample
+          [0x0103, 3, 1, compression], # compression
+          [0x0106, 3, 1, photometric_interpretation],  # photometric interpretation
+          [0x0111, 3, 1, 8], # strip offsets
+          [0x0115, 3, 1, 1], # samples per pixel
+          [0x0117, 4, 1, stream.length], # strip bytes count
+        ]
+
+        # TIFF marker
+        io << "II\x2A\x00".b.freeze
+
+        # IFD offset: the first image directory must begin on an even byte boundary.
+        io << [8 + stream.length + stream.length % 2].pack('V')
+
+        # write raw data
+        while source.alive? && (chunk = source.resume)
+          io << chunk
+        end
+
+        io << "\x00" if stream.length.odd?
+
+        # write IFD
+        io << [ifd_entries.count].pack('v')
+        ifd_entries.each { |entry| io << entry.pack('vvVV') }
+        io << [0].pack('N') # end of IFD
+      end
+
+      # Writes the deflated bitmap image as TIFF to the given IO stream.
+      def write_tiff(io, info)
+        # read stream and inflate it
+        source = stream_source
+        deflated = ''.b
+        while source.alive? && (chunk = source.resume)
+          deflated << chunk
+        end
+
+        bitmap = Zlib::Inflate.inflate(deflated)
+
+        # figure out components count
+        components = if info.indexed
+                       bits_per_pixel = bitmap.length * 8 / (info.width * info.height)
+                       bits_per_pixel / info.bits_per_component
+                     else
+                       info.components
+                     end
+
+        # figure out photometric interpretation
+        photometric_interpretation = if (components == 3)
+                                       2
+                                     elsif (components == 1) && info.indexed
+                                       palette_data = document.deref(self[:ColorSpace][3])
+                                       palette_data = palette_data.stream unless palette_data.kind_of?(String)
+                                       (palette_data[0] == "\xFF".b) ? 0 : 1  # 0 means white
+                                     else
+                                       0
+                                     end
+
+        # IFD entries
+        ifd_entries = [
+            [0x0100, 4, 1, info.width],  # width
+            [0x0101, 4, 1, info.height], # height
+            [0x0102, 3, 1, info.bits_per_component], # bits per sample
+            [0x0103, 3, 1, 1], # no compression
+            [0x0106, 3, 1, photometric_interpretation],  # photometric interpretation
+            [0x0111, 3, 1, 8], # strip offsets
+            [0x0115, 3, 1, components], # samples per pixel
+            [0x0117, 4, 1, bitmap.length], # strip bytes count
+        ]
+
+        # TIFF marker
+        io << "II\x2A\x00".b.freeze
+
+        # IFD offset: the first image directory must begin on an even byte boundary.
+        io << [8 + bitmap.length + bitmap.length % 2].pack('V')
+
+        # write raw data
+        io << bitmap
+
+        io << "\x00" if bitmap.length.odd?
+
+        # write IFD
+        io << [ifd_entries.count].pack('v')
+        ifd_entries.each { |entry| io << entry.pack('vvVV') }
+        io << [0].pack('N') # end of IFD
       end
 
     end
