@@ -296,6 +296,9 @@ module HexaPDF
   #    The value needs to be an object that responds to \#call(document, message, position) and
   #    returns +true+ if an error should be raised.
   #
+  # parser.keep_indirect_reference::
+  #    During parsing, keep the reference even if the dereferenced object is available
+  #
   # sorted_tree.max_leaf_node_size::
   #    The maximum number of nodes that should be in a leaf node of a node tree.
   #
@@ -365,6 +368,7 @@ module HexaPDF
                       'page.default_media_box' => :A4,
                       'page.default_media_orientation' => :portrait,
                       'parser.on_correctable_error' => proc { false },
+                      'parser.keep_indirect_reference' => false,
                       'sorted_tree.max_leaf_node_size' => 64,
                       'style.layers_map' => {
                         link: 'HexaPDF::Layout::Style::LinkLayer',
