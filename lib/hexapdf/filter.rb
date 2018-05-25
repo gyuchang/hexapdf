@@ -93,6 +93,7 @@ module HexaPDF
     autoload(:JPXDecode, 'hexapdf/filter/jpx_decode')
     autoload(:LZWDecode, 'hexapdf/filter/lzw_decode')
     autoload(:RunLengthDecode, 'hexapdf/filter/run_length_decode')
+    autoload(:CCITTFaxDecode, 'hexapdf/filter/ccitt_fax_decode')
 
     autoload(:Predictor, 'hexapdf/filter/predictor')
 

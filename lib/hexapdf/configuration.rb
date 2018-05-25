@@ -326,7 +326,7 @@ module HexaPDF
                         Fl: 'HexaPDF::Filter::FlateDecode',
                         RunLengthDecode: 'HexaPDF::Filter::RunLengthDecode',
                         RL: 'HexaPDF::Filter::RunLengthDecode',
-                        CCITTFaxDecode: nil,
+                        CCITTFaxDecode: 'HexaPDF::Filter::CCITTFaxDecode',
                         CCF: nil,
                         JBIG2Decode: nil,
                         DCTDecode: 'HexaPDF::Filter::DCTDecode',
