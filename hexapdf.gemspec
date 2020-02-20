@@ -1,49 +1,44 @@
-require 'rake'
-require_relative 'lib/hexapdf/version'
-
-PKG_FILES = FileList.new([
-                           'bin/*',
-                           'lib/**/*.rb',
-                           'data/**/*',
-                         ])
-description = 'HexaPDF local development version only'
-
-if ENV['REAL_GEM']
-  PKG_FILES.include('Rakefile', 'LICENSE', 'agpl-3.0.txt', 'README.md', 'CHANGELOG.md',
-                    'VERSION', 'CONTRIBUTERS', 'man/man1/hexapdf.1',
-                    'examples/*', 'test/**/*')
-  description = <<~DESC
-    HexaPDF is a pure Ruby library with an accompanying application for working with PDF
-    files.
-
-    In short, it allows creating new PDF files, manipulating existing PDF files, merging multiple
-    PDF files into one, extracting meta information, text, images and files from PDF files, securing
-    PDF files by encrypting them and optimizing PDF files for smaller file size or other
-    criteria.
-
-    HexaPDF was designed with ease of use and performance in mind. It uses lazy loading and lazy
-    computing when possible and tries to produce small PDF files by default.
-  DESC
-end
+# -*- encoding: utf-8 -*-
+# stub: hexapdf 0.11.5 ruby lib
 
 Gem::Specification.new do |s|
-  s.name = 'hexapdf'
-  s.version = HexaPDF::VERSION
-  s.summary = "HexaPDF - A Versatile PDF Creation and Manipulation Library For Ruby"
-  s.description = description
-  s.license = 'AGPL-3.0'
+  s.name = "hexapdf".freeze
+  s.version = "0.11.5"
 
-  s.files = PKG_FILES.to_a
+  s.required_rubygems_version = Gem::Requirement.new(">= 0".freeze) if s.respond_to? :required_rubygems_version=
+  s.require_paths = ["lib".freeze]
+  s.authors = ["Thomas Leitner".freeze]
+  s.date = "2020-02-20"
+  s.description = "HexaPDF local development version only".freeze
+  s.email = "t_leitner@gmx.at".freeze
+  s.executables = ["hexapdf".freeze]
+  s.files = ["bin/hexapdf".freeze, "data/hexapdf".freeze, "data/hexapdf/afm".freeze, "data/hexapdf/afm/Courier-Bold.afm".freeze, "data/hexapdf/afm/Courier-BoldOblique.afm".freeze, "data/hexapdf/afm/Courier-Oblique.afm".freeze, "data/hexapdf/afm/Courier.afm".freeze, "data/hexapdf/afm/Helvetica-Bold.afm".freeze, "data/hexapdf/afm/Helvetica-BoldOblique.afm".freeze, "data/hexapdf/afm/Helvetica-Oblique.afm".freeze, "data/hexapdf/afm/Helvetica.afm".freeze, "data/hexapdf/afm/MustRead.html".freeze, "data/hexapdf/afm/Symbol.afm".freeze, "data/hexapdf/afm/Times-Bold.afm".freeze, "data/hexapdf/afm/Times-BoldItalic.afm".freeze, "data/hexapdf/afm/Times-Italic.afm".freeze, "data/hexapdf/afm/Times-Roman.afm".freeze, "data/hexapdf/afm/ZapfDingbats.afm".freeze, "data/hexapdf/cmap".freeze, "data/hexapdf/cmap/83pv-RKSJ-H".freeze, "data/hexapdf/cmap/90ms-RKSJ-H".freeze, "data/hexapdf/cmap/90ms-RKSJ-V".freeze, "data/hexapdf/cmap/90msp-RKSJ-H".freeze, "data/hexapdf/cmap/90msp-RKSJ-V".freeze, "data/hexapdf/cmap/90pv-RKSJ-H".freeze, "data/hexapdf/cmap/Add-RKSJ-H".freeze, "data/hexapdf/cmap/Add-RKSJ-V".freeze, "data/hexapdf/cmap/Adobe-CNS1-UCS2".freeze, "data/hexapdf/cmap/Adobe-GB1-UCS2".freeze, "data/hexapdf/cmap/Adobe-Japan1-UCS2".freeze, "data/hexapdf/cmap/Adobe-Korea1-UCS2".freeze, "data/hexapdf/cmap/B5pc-H".freeze, "data/hexapdf/cmap/B5pc-V".freeze, "data/hexapdf/cmap/CNS-EUC-H".freeze, "data/hexapdf/cmap/CNS-EUC-V".freeze, "data/hexapdf/cmap/ETen-B5-H".freeze, "data/hexapdf/cmap/ETen-B5-V".freeze, "data/hexapdf/cmap/ETenms-B5-H".freeze, "data/hexapdf/cmap/ETenms-B5-V".freeze, "data/hexapdf/cmap/EUC-H".freeze, "data/hexapdf/cmap/EUC-V".freeze, "data/hexapdf/cmap/Ext-RKSJ-H".freeze, "data/hexapdf/cmap/Ext-RKSJ-V".freeze, "data/hexapdf/cmap/GB-EUC-H".freeze, "data/hexapdf/cmap/GB-EUC-V".freeze, "data/hexapdf/cmap/GBK-EUC-H".freeze, "data/hexapdf/cmap/GBK-EUC-V".freeze, "data/hexapdf/cmap/GBK2K-H".freeze, "data/hexapdf/cmap/GBK2K-V".freeze, "data/hexapdf/cmap/GBKp-EUC-H".freeze, "data/hexapdf/cmap/GBKp-EUC-V".freeze, "data/hexapdf/cmap/GBpc-EUC-H".freeze, "data/hexapdf/cmap/GBpc-EUC-V".freeze, "data/hexapdf/cmap/H".freeze, "data/hexapdf/cmap/HKscs-B5-H".freeze, "data/hexapdf/cmap/HKscs-B5-V".freeze, "data/hexapdf/cmap/Identity-H".freeze, "data/hexapdf/cmap/Identity-V".freeze, "data/hexapdf/cmap/KSC-EUC-H".freeze, "data/hexapdf/cmap/KSC-EUC-V".freeze, "data/hexapdf/cmap/KSCms-UHC-H".freeze, "data/hexapdf/cmap/KSCms-UHC-HW-H".freeze, "data/hexapdf/cmap/KSCms-UHC-HW-V".freeze, "data/hexapdf/cmap/KSCms-UHC-V".freeze, "data/hexapdf/cmap/KSCpc-EUC-H".freeze, "data/hexapdf/cmap/LICENSE.txt".freeze, "data/hexapdf/cmap/README.txt".freeze, "data/hexapdf/cmap/UniCNS-UCS2-H".freeze, "data/hexapdf/cmap/UniCNS-UCS2-V".freeze, "data/hexapdf/cmap/UniCNS-UTF16-H".freeze, "data/hexapdf/cmap/UniCNS-UTF16-V".freeze, "data/hexapdf/cmap/UniGB-UCS2-H".freeze, "data/hexapdf/cmap/UniGB-UCS2-V".freeze, "data/hexapdf/cmap/UniGB-UTF16-H".freeze, "data/hexapdf/cmap/UniGB-UTF16-V".freeze, "data/hexapdf/cmap/UniJIS-UCS2-H".freeze, "data/hexapdf/cmap/UniJIS-UCS2-HW-H".freeze, "data/hexapdf/cmap/UniJIS-UCS2-HW-V".freeze, "data/hexapdf/cmap/UniJIS-UCS2-V".freeze, "data/hexapdf/cmap/UniJIS-UTF16-H".freeze, "data/hexapdf/cmap/UniJIS-UTF16-V".freeze, "data/hexapdf/cmap/UniKS-UCS2-H".freeze, "data/hexapdf/cmap/UniKS-UCS2-V".freeze, "data/hexapdf/cmap/UniKS-UTF16-H".freeze, "data/hexapdf/cmap/UniKS-UTF16-V".freeze, "data/hexapdf/cmap/V".freeze, "data/hexapdf/encoding".freeze, "data/hexapdf/encoding/glyphlist.txt".freeze, "data/hexapdf/encoding/zapfdingbats.txt".freeze, "lib/hexapdf.rb".freeze, "lib/hexapdf/cli.rb".freeze, "lib/hexapdf/cli/batch.rb".freeze, "lib/hexapdf/cli/command.rb".freeze, "lib/hexapdf/cli/files.rb".freeze, "lib/hexapdf/cli/image2pdf.rb".freeze, "lib/hexapdf/cli/images.rb".freeze, "lib/hexapdf/cli/info.rb".freeze, "lib/hexapdf/cli/inspect.rb".freeze, "lib/hexapdf/cli/merge.rb".freeze, "lib/hexapdf/cli/modify.rb".freeze, "lib/hexapdf/cli/optimize.rb".freeze, "lib/hexapdf/cli/split.rb".freeze, "lib/hexapdf/cli/watermark.rb".freeze, "lib/hexapdf/composer.rb".freeze, "lib/hexapdf/configuration.rb".freeze, "lib/hexapdf/content.rb".freeze, "lib/hexapdf/content/canvas.rb".freeze, "lib/hexapdf/content/color_space.rb".freeze, "lib/hexapdf/content/graphic_object.rb".freeze, "lib/hexapdf/content/graphic_object/arc.rb".freeze, "lib/hexapdf/content/graphic_object/endpoint_arc.rb".freeze, "lib/hexapdf/content/graphic_object/geom2d.rb".freeze, "lib/hexapdf/content/graphic_object/solid_arc.rb".freeze, "lib/hexapdf/content/graphics_state.rb".freeze, "lib/hexapdf/content/operator.rb".freeze, "lib/hexapdf/content/parser.rb".freeze, "lib/hexapdf/content/processor.rb".freeze, "lib/hexapdf/content/transformation_matrix.rb".freeze, "lib/hexapdf/data_dir.rb".freeze, "lib/hexapdf/dictionary.rb".freeze, "lib/hexapdf/dictionary_fields.rb".freeze, "lib/hexapdf/document.rb".freeze, "lib/hexapdf/document/files.rb".freeze, "lib/hexapdf/document/fonts.rb".freeze, "lib/hexapdf/document/images.rb".freeze, "lib/hexapdf/document/pages.rb".freeze, "lib/hexapdf/encryption.rb".freeze, "lib/hexapdf/encryption/aes.rb".freeze, "lib/hexapdf/encryption/arc4.rb".freeze, "lib/hexapdf/encryption/fast_aes.rb".freeze, "lib/hexapdf/encryption/fast_arc4.rb".freeze, "lib/hexapdf/encryption/identity.rb".freeze, "lib/hexapdf/encryption/ruby_aes.rb".freeze, "lib/hexapdf/encryption/ruby_arc4.rb".freeze, "lib/hexapdf/encryption/security_handler.rb".freeze, "lib/hexapdf/encryption/standard_security_handler.rb".freeze, "lib/hexapdf/error.rb".freeze, "lib/hexapdf/filter.rb".freeze, "lib/hexapdf/filter/ascii85_decode.rb".freeze, "lib/hexapdf/filter/ascii_hex_decode.rb".freeze, "lib/hexapdf/filter/ccitt_fax_decode.rb".freeze, "lib/hexapdf/filter/dct_decode.rb".freeze, "lib/hexapdf/filter/encryption.rb".freeze, "lib/hexapdf/filter/flate_decode.rb".freeze, "lib/hexapdf/filter/jpx_decode.rb".freeze, "lib/hexapdf/filter/lzw_decode.rb".freeze, "lib/hexapdf/filter/predictor.rb".freeze, "lib/hexapdf/filter/run_length_decode.rb".freeze, "lib/hexapdf/font/cmap.rb".freeze, "lib/hexapdf/font/cmap/parser.rb".freeze, "lib/hexapdf/font/cmap/writer.rb".freeze, "lib/hexapdf/font/encoding.rb".freeze, "lib/hexapdf/font/encoding/base.rb".freeze, "lib/hexapdf/font/encoding/difference_encoding.rb".freeze, "lib/hexapdf/font/encoding/glyph_list.rb".freeze, "lib/hexapdf/font/encoding/mac_expert_encoding.rb".freeze, "lib/hexapdf/font/encoding/mac_roman_encoding.rb".freeze, "lib/hexapdf/font/encoding/standard_encoding.rb".freeze, "lib/hexapdf/font/encoding/symbol_encoding.rb".freeze, "lib/hexapdf/font/encoding/win_ansi_encoding.rb".freeze, "lib/hexapdf/font/encoding/zapf_dingbats_encoding.rb".freeze, "lib/hexapdf/font/invalid_glyph.rb".freeze, "lib/hexapdf/font/true_type.rb".freeze, "lib/hexapdf/font/true_type/builder.rb".freeze, "lib/hexapdf/font/true_type/font.rb".freeze, "lib/hexapdf/font/true_type/optimizer.rb".freeze, "lib/hexapdf/font/true_type/subsetter.rb".freeze, "lib/hexapdf/font/true_type/table.rb".freeze, "lib/hexapdf/font/true_type/table/cmap.rb".freeze, "lib/hexapdf/font/true_type/table/cmap_subtable.rb".freeze, "lib/hexapdf/font/true_type/table/directory.rb".freeze, "lib/hexapdf/font/true_type/table/glyf.rb".freeze, "lib/hexapdf/font/true_type/table/head.rb".freeze, "lib/hexapdf/font/true_type/table/hhea.rb".freeze, "lib/hexapdf/font/true_type/table/hmtx.rb".freeze, "lib/hexapdf/font/true_type/table/kern.rb".freeze, "lib/hexapdf/font/true_type/table/loca.rb".freeze, "lib/hexapdf/font/true_type/table/maxp.rb".freeze, "lib/hexapdf/font/true_type/table/name.rb".freeze, "lib/hexapdf/font/true_type/table/os2.rb".freeze, "lib/hexapdf/font/true_type/table/post.rb".freeze, "lib/hexapdf/font/true_type_wrapper.rb".freeze, "lib/hexapdf/font/type1.rb".freeze, "lib/hexapdf/font/type1/afm_parser.rb".freeze, "lib/hexapdf/font/type1/character_metrics.rb".freeze, "lib/hexapdf/font/type1/font.rb".freeze, "lib/hexapdf/font/type1/font_metrics.rb".freeze, "lib/hexapdf/font/type1/pfb_parser.rb".freeze, "lib/hexapdf/font/type1_wrapper.rb".freeze, "lib/hexapdf/font_loader.rb".freeze, "lib/hexapdf/font_loader/from_configuration.rb".freeze, "lib/hexapdf/font_loader/from_file.rb".freeze, "lib/hexapdf/font_loader/standard14.rb".freeze, "lib/hexapdf/image_loader.rb".freeze, "lib/hexapdf/image_loader/jpeg.rb".freeze, "lib/hexapdf/image_loader/pdf.rb".freeze, "lib/hexapdf/image_loader/png.rb".freeze, "lib/hexapdf/importer.rb".freeze, "lib/hexapdf/layout.rb".freeze, "lib/hexapdf/layout/box.rb".freeze, "lib/hexapdf/layout/frame.rb".freeze, "lib/hexapdf/layout/image_box.rb".freeze, "lib/hexapdf/layout/inline_box.rb".freeze, "lib/hexapdf/layout/line.rb".freeze, "lib/hexapdf/layout/numeric_refinements.rb".freeze, "lib/hexapdf/layout/style.rb".freeze, "lib/hexapdf/layout/text_box.rb".freeze, "lib/hexapdf/layout/text_fragment.rb".freeze, "lib/hexapdf/layout/text_layouter.rb".freeze, "lib/hexapdf/layout/text_shaper.rb".freeze, "lib/hexapdf/layout/width_from_polygon.rb".freeze, "lib/hexapdf/name_tree_node.rb".freeze, "lib/hexapdf/number_tree_node.rb".freeze, "lib/hexapdf/object.rb".freeze, "lib/hexapdf/parser.rb".freeze, "lib/hexapdf/pdf_array.rb".freeze, "lib/hexapdf/rectangle.rb".freeze, "lib/hexapdf/reference.rb".freeze, "lib/hexapdf/revision.rb".freeze, "lib/hexapdf/revisions.rb".freeze, "lib/hexapdf/serializer.rb".freeze, "lib/hexapdf/stream.rb".freeze, "lib/hexapdf/task.rb".freeze, "lib/hexapdf/task/dereference.rb".freeze, "lib/hexapdf/task/optimize.rb".freeze, "lib/hexapdf/tokenizer.rb".freeze, "lib/hexapdf/type.rb".freeze, "lib/hexapdf/type/acro_form.rb".freeze, "lib/hexapdf/type/acro_form/field.rb".freeze, "lib/hexapdf/type/acro_form/form.rb".freeze, "lib/hexapdf/type/action.rb".freeze, "lib/hexapdf/type/actions.rb".freeze, "lib/hexapdf/type/actions/go_to.rb".freeze, "lib/hexapdf/type/actions/go_to_r.rb".freeze, "lib/hexapdf/type/actions/launch.rb".freeze, "lib/hexapdf/type/actions/uri.rb".freeze, "lib/hexapdf/type/annotation.rb".freeze, "lib/hexapdf/type/annotations.rb".freeze, "lib/hexapdf/type/annotations/link.rb".freeze, "lib/hexapdf/type/annotations/markup_annotation.rb".freeze, "lib/hexapdf/type/annotations/text.rb".freeze, "lib/hexapdf/type/annotations/widget.rb".freeze, "lib/hexapdf/type/catalog.rb".freeze, "lib/hexapdf/type/cid_font.rb".freeze, "lib/hexapdf/type/embedded_file.rb".freeze, "lib/hexapdf/type/file_specification.rb".freeze, "lib/hexapdf/type/font.rb".freeze, "lib/hexapdf/type/font_descriptor.rb".freeze, "lib/hexapdf/type/font_simple.rb".freeze, "lib/hexapdf/type/font_true_type.rb".freeze, "lib/hexapdf/type/font_type0.rb".freeze, "lib/hexapdf/type/font_type1.rb".freeze, "lib/hexapdf/type/font_type3.rb".freeze, "lib/hexapdf/type/form.rb".freeze, "lib/hexapdf/type/graphics_state_parameter.rb".freeze, "lib/hexapdf/type/icon_fit.rb".freeze, "lib/hexapdf/type/image.rb".freeze, "lib/hexapdf/type/info.rb".freeze, "lib/hexapdf/type/names.rb".freeze, "lib/hexapdf/type/object_stream.rb".freeze, "lib/hexapdf/type/page.rb".freeze, "lib/hexapdf/type/page_tree_node.rb".freeze, "lib/hexapdf/type/resources.rb".freeze, "lib/hexapdf/type/trailer.rb".freeze, "lib/hexapdf/type/viewer_preferences.rb".freeze, "lib/hexapdf/type/xref_stream.rb".freeze, "lib/hexapdf/utils/bit_field.rb".freeze, "lib/hexapdf/utils/bit_stream.rb".freeze, "lib/hexapdf/utils/graphics_helpers.rb".freeze, "lib/hexapdf/utils/lru_cache.rb".freeze, "lib/hexapdf/utils/math_helpers.rb".freeze, "lib/hexapdf/utils/object_hash.rb".freeze, "lib/hexapdf/utils/pdf_doc_encoding.rb".freeze, "lib/hexapdf/utils/sorted_tree_node.rb".freeze, "lib/hexapdf/version.rb".freeze, "lib/hexapdf/writer.rb".freeze, "lib/hexapdf/xref_section.rb".freeze]
+  s.homepage = "https://hexapdf.gettalong.org".freeze
+  s.licenses = ["AGPL-3.0".freeze]
+  s.required_ruby_version = Gem::Requirement.new(">= 2.4".freeze)
+  s.rubygems_version = "2.7.4".freeze
+  s.summary = "HexaPDF - A Versatile PDF Creation and Manipulation Library For Ruby".freeze
 
-  s.require_path = 'lib'
-  s.executables = ['hexapdf']
-  s.add_dependency('cmdparse', '~> 3.0', '>= 3.0.3')
-  s.add_dependency('geom2d', '~> 0.2')
-  s.add_development_dependency('kramdown', '~> 1.0', '>= 1.13.0')
-  s.add_development_dependency('rubocop', '~> 0.58', '>= 0.58.2')
-  s.required_ruby_version = '>= 2.4'
+  s.installed_by_version = "2.7.4" if s.respond_to? :installed_by_version
 
-  s.author = 'Thomas Leitner'
-  s.email = 't_leitner@gmx.at'
-  s.homepage = "https://hexapdf.gettalong.org"
+  if s.respond_to? :specification_version then
+    s.specification_version = 4
+
+    if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
+      s.add_runtime_dependency(%q<cmdparse>.freeze, [">= 3.0.3", "~> 3.0"])
+      s.add_runtime_dependency(%q<geom2d>.freeze, ["~> 0.2"])
+      s.add_development_dependency(%q<kramdown>.freeze, [">= 1.13.0", "~> 1.0"])
+      s.add_development_dependency(%q<rubocop>.freeze, [">= 0.58.2", "~> 0.58"])
+    else
+      s.add_dependency(%q<cmdparse>.freeze, [">= 3.0.3", "~> 3.0"])
+      s.add_dependency(%q<geom2d>.freeze, ["~> 0.2"])
+      s.add_dependency(%q<kramdown>.freeze, [">= 1.13.0", "~> 1.0"])
+      s.add_dependency(%q<rubocop>.freeze, [">= 0.58.2", "~> 0.58"])
+    end
+  else
+    s.add_dependency(%q<cmdparse>.freeze, [">= 3.0.3", "~> 3.0"])
+    s.add_dependency(%q<geom2d>.freeze, ["~> 0.2"])
+    s.add_dependency(%q<kramdown>.freeze, [">= 1.13.0", "~> 1.0"])
+    s.add_dependency(%q<rubocop>.freeze, [">= 0.58.2", "~> 0.58"])
+  end
 end
