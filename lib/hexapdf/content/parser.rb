@@ -78,7 +78,8 @@ module HexaPDF
 
       # See: HexaPDF::Tokenizer#scan_until
       def scan_until(re)
-        @ss.scan_until(re)
+        m = @ss.scan_until(re)
+        (m == '') ? nil : m
       end
 
       # See: HexaPDF::Tokenizer#next_token
